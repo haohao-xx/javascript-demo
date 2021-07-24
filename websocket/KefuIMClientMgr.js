@@ -12,7 +12,7 @@ export default class KefuIMClientMgr {
   setup(uid, username) {
     this._uid = uid
     this._client = new WSClient(this._uid)
-    this._client.create(`ws://10.242.17.39:8189?uid=${uid}&name=${encodeURIComponent(username)}`)
+    this._client.create(`ws://xxxxxxxxxxx?uid=${uid}&name=${encodeURIComponent(username)}`)
 
     this._client.wsOpened(() => {
       console.info('ws opened.')
