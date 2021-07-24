@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>常见题目1</title>
+
+
+<style>
+    .triangle {
+        margin: auto;
+        width:0px;
+        height:0px;
+        border-top:10px solid red;
+        border-right:10px solid transparent;
+        border-bottom:10px solid transparent;
+        border-left:10px solid transparent;
+    }
+    .container{
+        display: flex;
+        position: relative;
+        width: 100%;
+        height: 600px;
+        align-items: center;
+        justify-content: center;
+    }
+    .box1{
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        background-color: blanchedalmond;
+    }
+</style>
+</head>
+<body>
+<div class="triangle"></div>
+
+<div class="container">
+    <div class="box1"></div>
+</div>
+
+<script>
+    //节流函数
+    /* function throttle(fn,wait,mustrun){
+        var timer=null;
+        starttime=new Date();
+        return function(){
+            var context=this;
+            let args=arguments;
+            //console.log(context)
+            //console.log(args)
+            curtime=new Date();
+            clearTimeout(timer);
+            if(curtime-starttime>mustrun){
+                fn.apply(context,args);
+                starttime=curtime;
+            }
+            else
+                timer=setTimeout(fn.apply(context,this),wait)  
+        }
+    }
+
+    function realfunc(){
+        console.log('success');
+    }
+    window.addEventListener('resize',throttle(realfunc,500,5000))
+ */
+
+
+//防抖
+/* function debounce(fn,times){
+    let timer=null;
+    return function(){
+        let context=this;
+        let args=arguments;
+        clearTimeout(timer);
+        timer=setTimeout(function(){
+            fn.apply(context,args);
+        },times);
+    }
+} */
+
+//promise
+    /* let promise1 = new Promise(function(resolve,reject){
+        setTimeout(function(){
+            resolve(123456)
+        },1000)
+    })
+    promise1.then(function success(val){
+        console.log(val)
+    },function () {
+        console.log('fail')
+    }) */
+
+
+//深拷贝
+     //var new_arr =JSON.parse(JSON.stringify(arr));
+
+    /*  var deepcopy=function (obj) {
+         if(typeof obj !=='object') return ;
+         var newobj=obj instanceof Array?[]:{};
+         for(var key in obj)
+        {
+            if(obj.hasOwnProperty(key))
+             {
+                newobj[key]=typeof obj[key]==='object'?deepcopy(obj[key]):obj[key];
+            }
+         }
+        return newobj;
+    } 
+    var obj=[1,2,{
+        name:'haohao',
+        age:'18',
+        hobby:['english','math']
+    },[1,2,3]]
+    console.log(deepcopy(obj)) */
+
+//继承
+     /* function Animal(name) {
+         this.name=name||'Animal';
+         this.sleep=function () {
+           console.log(this.name+'正在睡觉');
+         }
+     }
+     Animal.prototype.eat=function (food) {
+         console.log(this.name+'正在吃'+food);
+     }
+     
+     Function.prototype.a = 1;
+     Object.prototype.b = 2;
+     //console.log(Animal.a)
+     var a = new Animal("mao");
+     a.eat("苹果")
+     console.log(a.a, a.b); // undefined, 2    a被实例化为一个对象，所以不再是函数，没有a.a属性 */
+
+
+
+
+//判断obj2是否是obj1的原型
+    /* function judge(obj1,obj2) {
+        let prototype=obj2.prototype;
+        let proto=obj1.__proto__;
+        while(true)
+        {
+            if(proto===prototype)
+                return true;
+            if(proto===null)
+                return false;
+            proto=proto.__proto__;
+        }
+    }
+    let arr=[1,2,3];
+    console.log(judge(arr,Array));
+    console.log(arr.valueOf()) */
+
+//实现add(1)(2)(3)  柯里化
+     /*  function add () {
+        var args=[];    //var args=[].slice.call(arguments)
+        args.push(...arguments)   
+        console.log(args)
+        function sum(){
+            args.push(...arguments)
+            console.log(args)
+            return sum;
+        }
+        sum.toString=function () {
+            return args.reduce(function(a,b){
+                return a+b
+            })
+        }
+        return sum;
+    }
+    console.log(add(1)(3,4))    */
+   /*  console.log(add(1)(3,4)===8)  */  //false
+
+
+
+   //将原生的AJAX封装为promise
+   /* var newajax=function(url){
+       return new Promise(function(resolve,reject){
+           var xhr=new XMLHttpRequest();
+           xhr.open('get',url);
+           xhr.send(data);
+           xhr.onreadystatechange=function(){
+               if(xhr.status===200&&xhr.readyState===4)
+               {
+                   var json=JSON.parse(xhr.responseText)
+                   resolve(json)
+               }
+               else if(xhr.status!=200&&xhr.readyState===4)
+               {
+                   reject('error')
+               }
+           }
+       })
+   } */
+
+   
+//settimeout promise 实现sleep
+/*     function sleep(ms){
+        var temple=new Promise((resolve,reject)=>{
+            setTimeout(function(){
+                resolve('睡觉结束')
+            },ms);
+        })
+        return temple;
+    }
+    sleep(3000).then(function(res){
+        console.log(res)
+    },function(){
+        console.log('fail')
+    }) */
+
+    
+
+    
+    /* let store={
+       msg:'学习很可怜',
+        logmsg(){
+           let store={
+               msg:'你能不能长点心',
+               logmsg:()=>{
+                   let store={
+                       msg:'给人多留点时间',
+                       logmsg:()=>{
+                           console.log(this.msg)
+                       }
+                   }
+                   store.logmsg();
+               }
+           }
+           store.logmsg();
+        }
+    }
+    store.logmsg(); */  //学习很可怜
+
+// name前没有var 输出两次local  有var输出global，local
+    /* let name='global'
+    function getname(){
+        var name='local';
+        return function(){
+            return name
+        }
+    }
+    let getprivate=getname();
+    console.log(name)
+    console.log(getprivate())
+ */
+
+
+
+/* console.log('script start'); 
+setTimeout(function() 
+{  
+    console.log('setTimeout');
+}, 0); 
+  new Promise(function(resolve) 
+   {  
+      console.log('promise1'); 
+        resolve(); 
+   }).then(function() 
+{  console.log('promise2'); 
+   }).then(function() 
+   {  console.log('promise3'); }); 
+   console.log('script end'); */
+
+//20 20
+/* var a = 20;
+var obj = { a: 40}
+function fn()
+ {    
+     function foo() 
+    {        
+        console.log(this.a);    
+    }    
+    foo();
+} 
+fn.call(obj)
+fn() */
+
+
+
+//数组降维  带层数
+    /* let arr=[1,[2,3,[4,2]],[4,5,6,[7,8,[9,10]],0]]
+    function flat(arr,num){
+        let newarr=[];
+        let process=function(arr,index){
+            arr.forEach(element => {
+                (element instanceof Array)  && (index<num) ?process(element,index+1):newarr.push(element)
+            });
+        }
+        process(arr,0)
+        return newarr
+    }
+    console.log(flat(arr,1))
+ */
+
+// 0,1,2 0
+    /* function generaterid(){
+        var result=0;
+        return function(){
+            console.log(result)
+            result++;
+        }
+
+    }
+    let f1=generaterid();
+    let f2=generaterid();
+    f1();
+    f1();
+    f1();
+    f2(); */
+
+
+// first  first   this指向window  匿名函数执行具有全局性
+   /*  var name="first";
+    (function foo(){
+        var name="second";
+        console.log(this.name)
+    })();
+    console.log(this.name)
+ */
+
+
+
+// name a    name a   globalname globalname
+/* var name="globalname"
+var a={
+    name:"name a",
+    func:function(){
+        console.log(this.name)
+    }
+}
+a.func();
+window.a.func()
+var func=a.func;
+func();
+func=window.a.func;
+func() */
+
+
+//  undefined  3 1
+/* var foo={n:1};
+(function foo(){
+    var foo;
+    console.log(foo);
+    foo={n:2};
+    foo.n=3;
+    console.log(foo.n);
+})(foo);
+
+console.log(foo.n);
+ */
+
+
+
+// 10  10
+/* var a = 10;
+var obj = {
+    a:20,
+    say:()=>{
+        console.log(this.a)
+    }
+}
+obj.say();
+var obj2 = {a:30}
+obj.say.apply(obj2);
+ */
+
+
+
+//  无法实现循环调用
+/* function red(){
+    return new Promise((resolve,reject)=>{
+        console.log('red')
+        setTimeout(() => {
+           resolve()
+        }, 1000);
+    })
+}
+function yellow(){
+    return new Promise((resolve,reject)=>{
+        console.log('yellow')
+        setTimeout(() => {
+            resolve()
+        }, 2000);
+    })
+}
+function green(){
+    return new Promise((resolve,reject)=>{
+        console.log('green');
+        setTimeout(() => {
+            resolve()
+        }, 4000);
+    })
+}
+
+red().then(yellow).then(green) */
+
+
+
+
+//手写promise.all
+/* Promise.all=function(promises){
+    let len=promises.length;
+    let res=[];
+    return new Promise((resolve,reject)=>{
+        for(var item of promises)
+            {
+                Promise.resolve(item).then((data)=>{
+                    res.push(data)
+                    if(res.length==len)
+                        resolve(res)
+                })
+                .catch(e=>{
+                    reject(e)
+                })
+            }
+    })
+} */
+
+
+
+
+/* var x = 1,  // undefined 1 11
+    o = {
+        x: 10,
+        getVal: function () {
+            console.log(x);
+            var x = 15;            
+            (function () {
+                console.log(this.x++);
+            })();
+            console.log(++this.x);
+        }
+    };
+
+o.getVal(); */
+
+
+/* var a = 3   //undefined 10
+function test() {
+console.log(a)
+var a = 10;
+console.log(a)
+}
+
+test() */
+
+
+/* function generateSentences() {   //dfs全排列
+    // write code here
+    var res=[];
+    var words=[["question", "issue"], ["difficult", "embarrassment"],["this","that"]]
+    var sentence="this question is too difficult for me to answer"
+    dfs(words,sentence,0,res);
+    return res;
+}
+function dfs(words,sentence,index,res)
+{
+    if(index==words.length)
+    {
+        res.push(sentence);
+        return;
+    }
+    for(let i=index;i<words.length;i++)
+        {
+            if(i+1==words.length)
+                res.push(sentence)
+            sentence=sentence.replace(words[i][0],words[i][1]);
+            dfs(words,sentence,i+1,res);
+            sentence=sentence.replace(words[i][1],words[i][0]);
+        }
+}
+console.log(generateSentences())
+ */
+
+
+
+/* let arr=[2,1,2,4,3,1,2]
+let item=[...new Set(arr)]
+console.log(item)  // 2 1 4 3
+ */
+
+/* console.log('123abc'-'123')  // NaN
+console.log(5-'8') // -3
+console.log(typeof NaN)  // number */
+
+/* var a=2;    // 2
+function a(){};
+console.log(a) */
+
+
+/* function test58(n1,n2){    // -3   表达式不提升，相当于重构
+    return n1+n2
+}
+test58=function(n1,n2){
+    return n1-n2
+}
+console.log(test58(5,'8')) */
+
+/* let o={foo:'foo'}
+let obj=Object.create(o);
+o.foo=1;
+Object.defineProperty(obj,'bar',{
+    value:3,
+    //enumerable:true
+})
+for(var key in obj)
+console.log(obj[key])  // 1 */
+
+/* var animal={
+    size:1,
+    legs:function(){
+        return this.size
+    }
+}
+
+var cat=Object.create(animal)
+cat.size=4
+var human=Object.create(animal)
+human.size=2
+console.log(cat.legs===human.legs)
+console.log(cat.legs()===4)
+console.log(human.legs()===2)  */  //都输出true
+
+
+/* console.log(typeof NaN) */  //number
+
+/* const a=2021<0||typeof(2021+'pdd')   // string number
+const b=2021<0||typeof(2021-'pdd')
+console.log(a,b) */
+
+/* let arr1=[1,2,3,4,4]   //求交集
+let arr2=[1,2,4,4,5,7,8]
+function jiao(arr1,arr2){
+    let res=[];
+    let mp={};
+    for(var i of arr1)
+        mp[i]=mp[i]==undefined?1:mp[i]+1;
+    for(var j of arr2)
+        if(mp[j]>0)
+            {
+                res.push(j);
+                mp[j]--;
+            }
+    return res;
+}
+console.log(jiao(arr1,arr2)) */
+
+/* var a = {};    //undefined  undefined  长度为undefined
+var b = a;
+a[2] = 2;
+b[3] = 3;
+console.log(a.length)
+console.log(b.length)
+console.log(a)
+console.log(b) */
+
+
+
+
+// 小数乘法
+/* let a=100.23,b=0.009;
+sa=String(a);
+sb=String(b);
+var len=0;
+for(let i=0;i<sa.length;i++)
+{
+    if(sa[i]==".")
+        {
+            len+=sa.length-i-1
+        }
+}
+for(let i=0;i<sb.length;i++)
+{
+    if(sb[i]==".")
+        {
+            len+=sb.length-i-1
+        }
+}
+console.log(Number(sa.split(".").join(""))*Number(sb.split(".").join("")*Math.pow(10,-len))) */
+
+/* let a=Object.create(null)    //undefined  12  空白
+let b=Object.create({x:12})
+console.log(a.__proto__)
+console.log(b.x)
+console.log(a) */
+
+/* function run(){           //undefined   error:x is not defined
+    console.log(typeof y)
+    console.log(x)
+    console.log(a)
+    console.log(foo())
+    var a=1;
+    function foo(){
+        return 2
+    }
+}
+run() */
+
+/* function foo(){          //100 101 101     相当于 window.b=100   let a=b
+    let a=b=100;
+    window.x=y=101
+}
+foo();
+console.log(b,x,y) */
+
+
+
+/* console.log(JSON.stringify(123))   // 123  null undefined null true  undefined
+console.log(JSON.stringify(null))
+console.log(JSON.stringify(undefined))
+console.log(JSON.stringify(NaN))
+console.log(JSON.stringify(true))
+console.log(JSON.stringify(function(){})) */
+
+/* console.log(null===undefined)  //false
+console.log(NaN===NaN)          //false
+console.log(+0===-0)            //true
+console.log(null instanceof Object) //false
+console.log(typeof null)    //object
+console.log(typeof undefined)   //undefined
+console.log(undefined instanceof Object)    //false
+console.log([1,"2",3]==[1,2,3]) //false
+var a=new Number(2)
+console.log(a)      //[object number]
+ */
+
+
+//寄生组合继承
+/* function inherit(subtype,supertype){             
+    var prototype=Object.create(supertype.prototype);  //创建对象
+    prototype.constructor=subtype;              //增强对象
+    subtype.prototype=prototype                 //指定对象
+}
+
+supertype.call(this) */
+
+
+
+/* function list(){
+    this.name="haohao"
+    let age=19;
+    this.changeage=function(){
+        age=age-2;
+        //showage()
+    }
+    function showage(){
+        console.log(age)
+    }
+}
+var a=new list()
+console.log(a)
+ */
+
+</script>
+
+</body>
+</html>

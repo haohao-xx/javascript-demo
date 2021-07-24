@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table.game {
+    font-size: 14px;
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+}
+table.game td {
+    border: 1px solid #e1e1e1;
+    padding: 0;
+    height: 30px;
+    text-align: center;
+}
+table.game td.current{
+    background: #1890ff;
+}
+    </style>
+</head>
+<body>
+    <div id="jsContainer">
+        <table class="game">
+            <tbody>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td class="current"></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function bind() {
+            document.onkeydown = event => {
+            if (!event) return;
+            var code = event.keyCode || '';
+            if (!{'37': 1, '38': 1, '39': 1, '40': 1}[code]) return;
+            event.preventDefault && event.preventDefault();
+            //TODO: 请实现按键控制
+            var cur=document.getElementsByClassName("current")[0];
+            var parent=cur.parentNode.parentNode.children;
+            var brother=cur.parentNode.children
+            if(code=='37')
+            { 
+                cur.removeAttribute("class","current")       
+                brother[cur.cellIndex==0?brother.length-1:cur.cellIndex-1].setAttribute("class","current")
+            }
+            else if(code=='38')
+            {
+                
+                for(var i=0;i<parent.length;i++)
+                {
+                    if(parent[i].children[cur.cellIndex].className=="current")
+                        {
+                            parent[i==0?i=parent.length-1:i-1].children[cur.cellIndex].setAttribute("class","current");
+                            break;
+                        }
+                }
+                cur.removeAttribute("class","current")
+            }
+            else if(code=='39')
+            {
+                cur.removeAttribute("class","current")       
+                brother[cur.cellIndex==brother.length-1?0:cur.cellIndex+1].setAttribute("class","current")
+            }
+            else
+            {
+                for(var i=0;i<parent.length;i++)
+                {
+                    if(parent[i].children[cur.cellIndex].className=="current")
+                        {
+                            parent[i==parent.length-1?0:i+1].children[cur.cellIndex].setAttribute("class","current");
+                            break;
+                        }
+                }
+                cur.removeAttribute("class","current")
+            }
+        };
+        }
+
+        bind()
+    </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件代理+颜色检验</title>
+    <style>
+        #table1{
+            border-collapse: collapse;
+        }
+        table tr{
+            border: none;
+        }
+        table td{
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+        }
+        .blue{
+            background-color: blue;
+        }
+        .blue1{
+            background-color: rgb(160, 160, 250);
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <table id="table1">
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        </table>
+    </div>
+    <input type="text" onblur="judge(this.value)">
+    <h1 id="result"></h1>
+    <script>
+        var table=document.getElementById("table1")
+        table1.addEventListener("click",function(e){
+            var target=e.target;
+            if(target.getAttribute("class")=="blue")
+            {
+                return ;
+            }
+            else
+            {
+                let parentbrother=target.parentNode.parentNode.children;
+                for(let i=0;i<parentbrother.length;i++)
+                {
+                    let leng=parentbrother[i].children.length;
+                    for(let j=0;j<leng;j++)
+                    {
+                        parentbrother[i].children[j].setAttribute("class","");
+                    }
+                }
+
+                let rowbrother=target.parentNode.children;
+                for(let i=0;i<rowbrother.length;i++)
+                {
+                    rowbrother[i].setAttribute("class",'blue1')
+                }
+
+                for(let i=0;i<parentbrother.length;i++)
+                {
+                    let leng=parentbrother[i].children.length;
+                    for(let j=0;j<leng;j++)
+                    {
+                        if(j==target.cellIndex)
+                        {
+                            parentbrother[i].children[j].setAttribute("class",'blue1');
+                            break;
+                        }
+                    }
+                }
+                target.setAttribute("class",'blue')
+
+            }
+        })
+
+        function judge(str){
+            let res=document.getElementById("result");
+            var re1 = /^#([0-9a-f]{6}|[0-9a-f]{3})$/i
+            var re2 = /^rgb\(([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\)$/i
+            var re3 = /^rgba\(([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,([0-9]|[0-9][0-9]|25[0-5]|2[0-4][0-9]|[0-1][0-9][0-9])\,(1|1.0|0.[0-9])\)$/i
+            res.innerHTML=(re2.test(str) || re1.test(str) || re3.test(str))+"1";
+        }
+    </script>
+</body>
+</html>

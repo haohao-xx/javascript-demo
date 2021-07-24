@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表分段渲染</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        #box{
+            overflow: hidden;
+        }
+        ul{
+            overflow: hidden;
+            width: 1000px;
+            padding: 40px;
+        }
+        li{
+            width: 100px;
+            float: left;
+        }
+        .hide{
+            display: none;
+        }
+        .show{
+            display: block;
+        }
+        #footer span{
+            width: 10px;
+            margin-left: 5px ;
+            border: 1px solid green;
+        }
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <div id="footer">
+    </div>
+</body>
+<script>
+    //console.time()
+    var footer=document.querySelector("#footer");
+    let box=document.getElementById("box");
+    let total=1000 //1000条数据
+    let pagesize=200 //每页200条
+    let totalpage=total/pagesize
+    var index=1;
+
+    function insert(curtotal,curindex){
+        if(curtotal<=0) 
+            return;
+        let ul=document.createElement("ul");
+        for(let i=1;i<=pagesize;i++)
+            {
+                let li=document.createElement("li")
+                li.innerHTML=`第${curindex+i}数据`
+                ul.appendChild(li)
+            }
+        box.appendChild(ul);
+        setTimeout(() => {
+            let span=document.createElement("span");
+            span.innerHTML=index++;
+            footer.appendChild(span);
+            insert(curtotal-pagesize,curindex+pagesize);
+        }, 5000);
+    }
+
+
+    insert(total,0)
+    //console.timeEnd()
+</script>
+</html>

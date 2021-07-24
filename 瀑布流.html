@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>waterfall</title>
+	<style>
+	*{
+		margin:0;
+		padding:0;
+		box-sizing: border-box;
+	}
+	.waterfall{
+		position:absolute;
+		width: 100%;
+	}
+	.box{
+		display: inline-block;
+		margin:10px 0px 0px 10px;
+		border:1px solid #ccc;
+		border-radius:5px;
+		box-shadow:0 0 5px #ccc;
+		position: absolute;
+		
+	}
+	.pic{
+		padding:15px;
+	}
+	.pic img{
+		width:180px;
+		height:auto;
+	}
+	.pic p{
+		color:#ccc;
+		width: 180px;
+	}
+	</style>
+</head>
+<body>
+	<div class="waterfall"></div>
+	<script>
+			var text=["May Buddha let us meet", "in my most beautiful hours,", "I have prayed for it", "for five hundred years.", 
+			"Buddha made me a tree", "by the path you may take,", "In full blossoms I'm waiting in the sun", 
+			"every flower carrying my previous hope.", "As you are near, listen carefully", "the quivering leaves are my waiting zeal,", 
+			"As you pass by the tree", "without noticing me,", "My friend, upon the ground behind you", 
+			"is not the fallen petals but my withered heart.", "May Buddha let us meet", "My friend, upon the ground behind you", 
+			"is not the fallen petals but my withered heart.", "May Buddha let us meet", "the quivering leaves are my waiting zeal,",
+			 "As you pass by the tree", "without noticing me,", "As you are near, listen carefully", "In full blossoms I'm waiting in the sun", 
+			 "by the path you may take,", "in my most beautiful hours,", "every flower carrying my previous hope.", 
+			 "My friend, upon the ground behind you", "is not the fallen petals but my withered heart.", 
+			 "every flower carrying my previous hope.", "My friend, upon the ground behind you", "My friend, upon the ground behind you",
+			  "every flower carrying my previous hope.", "is not the fallen petale but my withered heart.",
+			   "every flower carryine my previous hope.", "My friend, upon the ground behind you", "May Buddha let ue meet", 
+			   "My friend, upon the ground behind you", "May Buddha let ue meet", "May Buddha let ue meet"]
+			var timer = null
+			function createEle(num){
+				var container = document.querySelector(".waterfall")
+				for(let i=0;i<num;i++)
+				{
+					var box=document.createElement("div")
+					box.className='box'
+					var pic=document.createElement("div")
+					pic.className='pic'
+					var img=document.createElement("img")
+					img.src=`img/${i+1}.jpg`
+					var p=document.createElement("p")
+					p.innerText=text[i]
+					pic.appendChild(img)
+					pic.appendChild(p)
+					box.appendChild(pic)
+					container.appendChild(box)
+				}
+				
+			}
+
+			function isOnload(){
+				let imgs=[].slice.call(document.querySelectorAll(".pic > img"))
+				if(!imgs.length) return false
+				//console.log(imgs)
+				let result=imgs.every((ele,index)=>{
+					return ele.complete
+				})
+				return result
+			}
+
+			function rePaint(){
+				console.log('going repaint')
+					if(!timer) return
+					var boxs=[].slice.call(document.getElementsByClassName("box"));
+					var totalWidth=document.getElementsByClassName("waterfall")[0].clientWidth;
+					var singleWidth = boxs[0].clientWidth+10
+					//console.log(totalWidth)
+					var col=Math.floor(totalWidth/singleWidth) 
+					var height=new Array(col).fill(0);
+					boxs.forEach(item => {
+					var index=height.indexOf(Math.min(...height));
+					item.style.left=index*singleWidth+"px";
+					item.style.top=height[index]+"px";
+					height[index]+=item.clientHeight;
+				});
+			}
+			
+				//添加防抖
+			function debounce(fn,wait){
+				var timer=null;
+				return function(){
+					var context=this;
+					var args=this.arguments;
+					clearTimeout(timer);
+					timer=setTimeout(
+						function(){
+						fn.apply(context,args)
+					},wait)
+				}
+			}
+			
+			createEle(39)
+
+			window.addEventListener('resize',debounce(rePaint,100))
+
+			timer=setInterval(function(){
+				let res=isOnload()
+				console.log(timer)
+				if(res){
+					clearInterval(timer)
+					rePaint()
+					console.log(timer)
+				}
+			},2000)
+			
+			
+
+
+
+	</script>
+</body>
+</html>

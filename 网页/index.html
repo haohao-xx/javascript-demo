@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link  rel="stylesheet"  href="./css/common.css">
+    <style>
+        #banner{position: relative;overflow: hidden;background-color: cornsilk;}
+        #banner .banner_list{width: 4320px;height: 469px;transition: transform .5s; transform: translateX(0px);}
+        #banner .banner_list li{width: 1080px;height: 100%;float: left;}
+        #banner .banner_list li img{margin: 0 auto;height: 100%;}
+        #banner span{position: absolute;display: flex;align-items: center;justify-content: center;cursor: pointer; width: 20px;height: 40px; background-color: chocolate; color: rgb(77, 40, 209);}
+        #banner .pre{top: 230px;left: 140px;}
+        #banner .next{top: 230px;right: 140px;}
+        #banner .banner_btn{width:100%;position: absolute;text-align: center;bottom: 19px;}
+        #banner .banner_btn li{display: inline-block;width: 12px;height: 12px;border-radius: 50%;
+        background-color: rgb(176, 236, 236);margin-left: 5px;cursor: pointer;}
+        #banner .banner_btn li.on{background-color: aqua;}
+
+        #service{overflow: hidden;min-height: 407px;}
+        #service .service_list{text-align: center;margin-top: 30px;}
+        #service .service_list div{width: 102px;height: 102px;border-radius: 50%;margin: 0 auto;}
+        #service .service_list li:nth-of-type(1) div{background-image: url(../img/food1.jpg);}
+        #service .service_list li:nth-of-type(2) div{background-image: url(../img/food2.jpg);}
+        #service .service_list li:nth-of-type(3) div{background-image: url(../img/food3.jpg);}
+        #service .service_list li:nth-of-type(4) div{background-image: url(../img/food4.jpg);}
+        #service .service_list li{display:block;float:left; width: 25%;}
+        #service .service_list h3{font-size: 18px;color: rgb(134, 89, 33);line-height: 36px;}
+        #service .service_list p{font-size: 14px; color: rgb(139, 94, 39);line-height: 22px;}
+    
+        #case{background-color: rgb(216, 209, 201);}
+        #case .container{min-height: 460px;overflow: hidden;}
+        #case .case_list{margin-top: 20px;align-content: center;}
+        #case .case_list li{float: left;width: 29%; height: 200px; margin: 0 10px;}
+        #case .case_list li img{width: 100%;height: 100%;}
+        #case .case_btn{width: 176px;height: 37px;border-radius: 15px;background-color: rgb(136, 206, 65);
+        color: rgb(223, 210, 210);margin:0 auto;text-align: center;line-height: 37px;margin-top: 36px;}
+        #case .case_btn a{display: block;width: 100%;height: 100%;}
+        
+        #news {min-height: 450px;overflow: hidden;}
+        #news .title{margin-top: 60px;}
+        #news dl{margin-top: 48px;}
+        #news dt{width: 234px;}
+        #news dd{width: 800px;}
+        #news .news_list{width: 100%;}
+        #news .news_list li{width: 50%;float: left;margin-top: 10px;}
+        #news .news_date{width: 70px;height: 70px;text-align: center;}
+        #news .news_date i{font-size: 39px;color: rgb(130, 219, 41);display: block;}
+        #news .news_date span{color:pink;font-size: 20px;line-height: 36px;}
+        #news .news_text{margin-left: 20px;}
+
+
+    
+    </style>
+</head>
+<body>
+        <div  id="head"  class="container " >
+            <div class="head_logo l">
+                <a href="#">
+                    <img src="../img/boy.jpg" width="100%" height="100%"  alt="logo" title="logo">
+                </a>
+            </div>
+            <ul class="head_menu r">
+                <li><a href="">HOME</a></li>
+                <li><a href="">ABOUT</a></li>
+                <li><a href="">PROTOFOLIO</a></li>
+                <li><a href="">SERVICE</a></li>
+                <li><a href="">NEWS</a></li>
+                <li><a href="">CONTACTUS</a></li>
+            </ul>
+        </div>
+        <div id="banner" class="container">
+            <ul class="banner_list">
+                <li >
+                    <a href="#"><img src="../img/game1.jpg" ></a>
+                </li>
+                <li >
+                    <a href="#"><img src="../img/game2.jpg" ></a>
+                </li>
+                <li >
+                    <a href="#"><img src="../img/game3.jpg" ></a>
+                </li>
+                <li >
+                    <a href="#"><img src="../img/game4.jpg" ></a>
+                </li>
+            </ul>
+            <span class="pre"><</span>
+            <span class="next">></span>
+            <ol class="banner_btn">
+                <li class="on">
+                    <a href="#"></a>
+                </li>
+                <li>
+                    <a href="#"></a>
+                </li>
+                <li>
+                    <a href="#"></a>
+                </li>
+                <li>
+                    <a href="#"></a>
+                </li>
+            </ol>
+        </div>
+        <div id="service" class="container">
+            <div class="title">
+                <h2>服务范围</h2>
+                <p>service ranging</p>
+            </div>
+            <ul class="service_list">
+               <li> 
+                    <div></div>
+                    <h3>哈哈哈哈</h3>
+                    <p>这是一个练习网页<br>这是一个练习网页</p>
+                </li>
+                <li> 
+                    <div></div>
+                    <h3>哈哈哈哈</h3>
+                    <p>这是一个练习网页<br>这是一个练习网页</p>
+                </li>
+                <li> 
+                    <div></div>
+                    <h3>哈哈哈哈</h3>
+                    <p>这是一个练习网页<br>这是一个练习网页</p>
+                </li>
+                <li> 
+                    <div></div>
+                    <h3>哈哈哈哈</h3>
+                    <p>这是一个练习网页<br>这是一个练习网页</p>
+                </li>
+            </ul>
+        </div>
+        <div id="case" class="container_fluid">
+            <div class="container">
+                <div class="title">
+                    <h2>（客户案例）</h2>
+                    <p>hahahahahhahahah</p>
+                </div>
+                <ul class="case_list clear">
+                    <li>
+                        <a href="#"><img src="../img/food1.jpg"> </a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="../img/food2.jpg"> </a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="../img/food3.jpg"> </a>
+                    </li>
+                </ul>
+                <div class="case_btn">
+                    <a href="#">更多</a>
+                </div>
+            </div>
+        </div>
+        <div id="news" class="container">
+            <div class="title">
+                <h2>最新资讯</h2>
+                <p>哈哈哈哈哈哈</p>
+            </div>
+            <dl>
+                <dt class="l"><img src="../img/food4.jpg"  width="100%" alt=""></dt>
+              
+                <dd class="l">
+                    <ul class="news_list">
+                        <li>
+                            <div class="news_date l">
+                                <i>09</i>
+                                <span>Jan</span>
+                            </div>
+                            <div class="news_text l">
+                                <h3>今天晴天</h3>
+                                <p>无内容</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="news_date l">
+                                <i>09</i>
+                                <span>Jan</span>
+                            </div>
+                            <div class="news_text l">
+                                <h3>今天晴天</h3>
+                                <p>无内容</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="news_date l">
+                                <i>09</i>
+                                <span>Jan</span>
+                            </div>
+                            <div class="news_text l">
+                                <h3>今天晴天</h3>
+                                <p>无内容</p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="news_date l">
+                                <i>09</i>
+                                <span>Jan</span>
+                            </div>
+                            <div class="news_text l">
+                                <h3>今天晴天</h3>
+                                <p>无内容</p>
+                            </div>
+                        </li>
+                    </ul>
+                </dd>
+            </dl>
+        </div>
+        <div id="foot" class="container_fliud">
+            <div class="container">
+                <p class="l">版权信息</p>
+                <div class="r">
+                    <a href="#">Home</a>|<a href="#">About</a>|<a href="#">Contact</a>
+                </div>
+            </div>
+        </div>
+</body>
+<script src="轮播.js"></script>
+</html>

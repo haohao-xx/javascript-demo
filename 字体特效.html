@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>字体特效</title>
+    <style>
+        span{
+            color: rgb(158, 105, 6);
+            position: relative;
+            z-index: 1;
+            top: 20px;
+        }
+        span::after{
+            content: "";
+            z-index: -1;
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background:red;
+            transform: scaleX(0);
+            transition: transform 0.2s ease-in-out;
+        }
+        span::after{
+            bottom: 0;
+            transform-origin: center left;
+        }
+        span::before{
+            content: "";
+            position: absolute;
+            top:0;
+            bottom: 0;
+            left: -0.25em;
+            right: -0.25em;
+            z-index: -1;
+            background: black;
+            transform: scaleY(0);
+            transform-origin: center bottom;
+            transition: all 0.1s linear;
+        }
+        span:hover{
+            cursor: pointer;
+        }
+        span:hover::after{
+            transform-origin: center right;
+            transform: scaleX(1);
+
+        }
+        span:hover::before{
+            transform: scaleX(1);
+        }
+    </style>
+</head>
+<body>
+    <span>i was supposed to chart and celerate</span>
+</body>
+</html>

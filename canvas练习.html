@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas</title>
+    <style>
+        span{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <span>矩形</span>
+    <canvas id="mycanvas1" width="200" height="100"></canvas>
+    <span>路径</span>
+    <canvas id="mycanvas2" width="200" height="100"></canvas>
+    <span>文字</span>
+    <canvas id="mycanvas3" width="200" height="100"></canvas>
+
+    <span>图像</span>
+    <canvas id="mycanvas4" width="200" height="100"></canvas>
+    <span>黑白</span>
+    <canvas id="mycanvas5" width="200" height="100"></canvas>
+    <span>去色</span>
+    <canvas id="mycanvas6" width="200" height="100"></canvas>
+    <script>
+
+        //矩形
+        var c1=document.getElementById("mycanvas1")
+        var cxt1=c1.getContext("2d");
+        cxt1.fillstyle="#FF0000";
+        cxt1.fillRect(0,0,200,100)
+        //路径
+        var c2=document.querySelector("#mycanvas2");
+        var cxt2=c2.getContext("2d");
+        cxt2.moveTo(0,0);
+        cxt2.lineTo(200,100);
+        cxt2.stroke()
+        //文字
+        var c3 = document.getElementById("mycanvas3");
+        var ctx3 = c3.getContext("2d");
+        ctx3.font = "30px Arial";
+        ctx3.fillText("Hello World", 10, 50);
+
+        //图像
+        function tuxiang(){ 
+            var img=new Image();
+            img.src="../images/1.jpg";
+            img.onload=function(){
+                var canvas=document.getElementById("mycanvas4");
+                var ctx1=canvas.getContext("2d");
+                //canvas.width = img.width;
+                //canvas.height = img.height;
+                ctx1.drawImage(img, 0, 0, canvas.width, canvas.height);
+                window.imgData = ctx1.getImageData(0, 0, canvas.width, canvas.height);
+            }
+        }
+        tuxiang()
+        function heibai(){
+            var img = new Image();
+            img.src = "../images/1.jpg";
+            img.onload = function () {
+            var canvas = document.querySelector("#mycanvas5");
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+            // 开始滤镜处理
+            var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            for (var i = 0; i < imgData.data.length / 4; ++i) {
+                var red = imgData.data[i * 4],
+                green = imgData.data[i * 4 + 1],
+                blue = imgData.data[i * 4 + 2];
+                var gray = 0.3 * red + 0.59 * green + 0.11 * blue; // 计算gray
+                // 刷新RGB，注意：
+                // imgData.data[i * 4 + 3]存放的是alpha，不需要改动
+                imgData.data[i * 4] = gray;
+                imgData.data[i * 4 + 1] = gray;
+                imgData.data[i * 4 + 2] = gray;
+            }
+            ctx.putImageData(imgData, 0, 0); // 重写图像数据
+            };
+    }
+    heibai()
+
+        function filter(){
+            var img = new Image();
+            img.src = "../images/1.jpg";
+            img.onload = function () {
+            var canvas = document.querySelector("#mycanvas6");
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            // 开始滤镜处理
+            var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            for (var i = 0; i < imgData.data.length / 4; ++i) {
+                var red = imgData.data[i * 4],
+                green = imgData.data[i * 4 + 1],
+                blue = imgData.data[i * 4 + 2];
+                // 刷新RGB，注意：
+                // imgData.data[i * 4 + 3]存放的是alpha，不需要改动
+                imgData.data[i * 4] = 255 - imgData.data[i * 4];
+                imgData.data[i * 4 + 1] = 255 - imgData.data[i * 4 + 1];
+                imgData.data[i * 4 + 2] = 255 - imgData.data[i * 4 + 2];
+            }
+            ctx.putImageData(imgData, 0, 0); // 重写图像数据
+            };
+        }
+        filter()
+    </script>
+</body>
+</html>

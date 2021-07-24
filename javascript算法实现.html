@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>算法</title>
+</head>
+<body>
+    
+    <script>
+
+        //数组测试平台
+/*         function Carray(length){
+            this.datastore=new Array(length);
+            this.setData=function(maxval){
+                for(var i=0;i<this.datastore.length;i++)
+                {   
+                    this.datastore[i]=Math.floor(Math.random()*(maxval+1))
+                }       
+            }
+            this.show=function(){
+                var res="";
+                for(var i=0;i<this.datastore.length;i++)
+                {
+                    res+=this.datastore[i]+" "
+                }
+                console.log(res) 
+            }
+        }
+
+        var nums=new Carray(29);  //定义数组长度
+        nums.setData(80)        //定义数据范围
+        nums.show()
+
+        function swap(arr,i,j)
+        {
+            var tmp=arr[i];
+            arr[i]=arr[j];
+            arr[j]=tmp;
+        } */
+
+        //冒泡排序
+       /*  function bubblesort(arr){
+            var len=arr.length;
+            for(var i=0;i<len-1;i++)
+            {
+                for(var j=0;j<len-1-i;j++)
+                {
+                    if(arr[j]>arr[j+1])
+                    {
+                        var tmp=arr[j];
+                        arr[j]=arr[j+1];
+                        arr[j+1]=tmp;
+                    }
+                }
+            }
+        }
+        bubblesort(nums.datastore)
+        nums.show() */
+
+        //插入排序
+  /*       function insertsort(arr){
+            var len=arr.length;
+            var curindex,cur;
+            for(var i=1;i<len;i++)
+            {
+                cur=arr[i];
+                curindex=i
+                while(curindex>=0&&arr[curindex-1]>cur)
+                {
+                    arr[curindex]=arr[curindex-1];
+                    curindex--;
+                }
+                arr[curindex]=cur;
+            }
+        }
+
+        insertsort(nums.datastore)
+        nums.show() */
+
+
+
+        //选择排序
+
+        /* function selectsort(arr){
+            var len=arr.length;
+            var minindex;
+            for(var i=0;i<len;i++)
+            {
+                minindex=i;
+                for(var j=i+1;j<len;j++)
+                {
+                    if(arr[j]<arr[minindex])
+                        minindex=j
+                }
+                swap(arr,i,minindex)
+            }
+        }
+        selectsort(nums.datastore)
+        nums.show() */
+
+
+        //希尔排序
+
+        /* function shellsort(arr){
+            var len=arr.length;
+            var h=1;
+            while(h<len/3)
+            {
+                h=3*h+1;
+            }
+            while(h>=1)
+            {
+                for(var i=h;i<len;i++)
+                {
+                    for(var j=i;j>=h&&arr[j]<arr[j-h];j-=h)
+                    {
+                        swap(arr,j,j-h)
+                    }
+                }
+                h=(h-1)/3;
+            }
+        }
+
+        shellsort(nums.datastore)
+        nums.show() */
+
+
+        //归并排序
+        /* function mergesort(arr){
+            var len=arr.length;
+            if(len<2)
+                return arr;
+            var mid=Math.floor(len/2);
+            var left=arr.slice(0,mid);
+            var right=arr.slice(mid);
+            return merge(mergesort(left),mergesort(right));
+        }
+        function merge(left,right){
+            var result=[];
+            while(left.length>0&&right.length>0)
+            {
+                if(left[0]<=right[0])
+                {
+                    result.push(left.shift());
+                }
+                else
+                {
+                    result.push(right.shift());
+                }
+            }
+            while(left.length>0)
+                result.push(left.shift())
+            while(right.length>0)
+                result.push(right.shift())
+            return result;
+        }
+        nums.datastore=mergesort(nums.datastore)
+        nums.show() */
+
+
+        //快速排序
+  /*      function quicksort(arr,left,right){
+            if(left<right)
+            {
+                var mid=partition(arr,left,right);
+                quicksort(arr,left,mid-1);
+                quicksort(arr,mid+1,right)
+            }
+            return arr;
+        }
+        function partition(arr,left,right){
+            var pivot=arr[left];
+            while(left<right)
+            {
+                while(left<right&&arr[right]>pivot)
+                    right--;
+                arr[left]=arr[right];
+                while(left<right&&arr[left]<=pivot)
+                    left++;
+                arr[right]=arr[left]
+            }
+            arr[left]=pivot
+            return left;
+        }
+
+        nums.datastore=quicksort(nums.datastore,0,nums.datastore.length-1)
+        nums.show() */
+
+        //快速排序简洁写法
+       /*  function quicksort(arr){
+            if(arr.length==0)
+                return [];
+            var lesser=[];
+            var greater=[];
+            var pivot=arr[0];
+            for(var i=1;i<arr.length;i++)
+            {
+                if(arr[i]<pivot)
+                    lesser.push(arr[i])
+                else
+                    greater.push(arr[i])
+            }
+            return quicksort(lesser).concat(pivot,quicksort(greater))
+        }   
+
+        nums.datastore=quicksort(nums.datastore,0,nums.datastore.length-1)
+        console.log(nums.show()) */
+
+
+
+        //堆排序
+
+  /*       function heapify(arr,start,end)
+        {
+            var tmp=arr[start];
+            for(var j=start*2+1;j<=end;j=j*2+1)
+            {
+                if(j+1<=end&&arr[j]<arr[j+1])
+                    j++;
+                if(tmp>arr[j])
+                    break;
+                arr[start]=arr[j];
+                start=j;
+            }
+            arr[start]=tmp;
+        }
+        function heapsort(arr){
+            var len=arr.length;
+            for(var i=Math.floor(len/2)-1;i>=0;i--)
+            {
+                heapify(arr,i,len-1);
+            }
+            for(var i=len-1;i>=0;i--)
+            {
+                swap(arr,0,i);
+                heapify(arr,0,i-1);
+            }
+            return arr.toString();
+        }
+
+        console.log(heapsort(nums.datastore)) */
+
+        //动态规划  寻找最长公共字串
+
+       /*  function commonsubstr(str1,str2){
+            var maxlen=0;
+            var index=0;
+            var dp=new Array(str1.length);
+            for(var i=0;i<=str1.length;i++)
+            {
+                dp[i]=new Array(str2.length).fill(0)
+            }
+            for(var i=0;i<str1.length;i++)
+            {
+                for(var j=0;j<str2.length;j++)
+                {
+                    if(str1[i]==str2[j])
+                    {
+                        if(i>0&&j>0)
+                            dp[i][j]=dp[i-1][j-1]+1;
+                        else
+                            dp[i][j]=1;
+                        if(maxlen<dp[i][j])
+                        {
+                            maxlen=dp[i][j];
+                            index=i;
+                        }
+                    }
+                }
+            }
+
+            var res="";
+            res=str1.substr(index-maxlen+1,maxlen)
+            return res;
+        }
+        console.log(commonsubstr("amgbbcc","dcgbbc"))   */
+
+
+        //动态规划  0-1背包
+        
+        /* var opacity=20;
+        var value=[10,12,8,6,4,9,3];
+        var size=[3,5,10,5,7,8,9];
+        var n=value.length;
+        function maxval(opacity,value,size,n){
+            var dp=new Array((n+1));
+            for(let i=0;i<=n;i++)
+            {
+                    dp[i]=new Array((opacity+1)).fill(0);
+            }
+            for(let i=1;i<=n;i++)
+            {
+                for(let j=1;j<=opacity;j++)
+                {
+                    if(j<size[i-1])
+                        dp[i][j]=dp[i-1][j];
+                    else
+                    {
+                        dp[i][j]=Math.max(dp[i-1][j],dp[i-1][j-size[i-1]]+value[i-1])
+                    }
+                }
+            } 
+            console.dir(dp)
+            return dp[n][opacity]
+        }
+
+        console.log(maxval(opacity,value,size,n))   */
+
+
+     //双向链表
+   /*  function dblinkedlist(){
+       let Node=function(val){
+            this.val=val;
+            this.prev=null;
+            this.next=null;
+       }
+       let length=0;
+       let head=new Node(0);
+       let tail=new Node(0);
+       head.next=tail;
+       tail.prev=head;
+
+       this.append=function(val){
+           let node=new Node(val);
+           if(length==0)
+            {
+                head.next=node;
+                node.next=tail;
+                node.prev=head;
+                tail.prev=node;
+            }
+            else
+            {
+                let cur=tail.prev;
+                cur.next=node;
+                node.prev=cur;
+                node.next=tail;
+                tail.prev=node;
+            }
+            length++;
+        }
+
+        this.addhead=function(val){
+            let node=new Node(val);
+            if(length==0)
+            {
+                head.next=node;
+                node.next=tail;
+                node.prev=head;
+                tail.prev=node;
+            }
+            else
+            {
+                let cur=head.next;
+                node.next=cur;
+                cur.prev=node;
+                node.prev=head;
+                head.next=node;
+            }
+            length++;
+        }
+
+        this.removeAt=function(position){
+            if(position>-1&&position<length)
+            {
+                let cur=head.next,index=0,pre=head;
+                    while(index++<position)
+                    {
+                        pre=cur;
+                        cur=cur.next;
+                    }
+                    pre.next=cur.next;
+                    cur.next.prev=pre;
+                
+                length--;
+            }
+            else
+                console.log('remove fail');
+        }
+
+        this.insert=function(position,val){
+            if(position>=0&&position<=length)
+            {
+                let node=new Node(val);
+                let cur=head.next,pre=head,index=0;
+                    while(index++<position)
+                    {
+                        pre=cur;
+                        cur=cur.next
+                    }
+                    node.next=cur;
+                    pre.next=node;
+
+                    cur.prev=node;
+                    node.prev=pre;
+                
+                    length++;
+            }
+            else
+            {
+                return 
+            }
+        }
+
+        this.toString=function(){
+            let cur=head.next,
+            string ="";
+            while(cur!=tail)
+            {
+                string+=cur.val+" ";
+                cur=cur.next
+            }
+            return string
+        }
+
+   }
+   let list=new dblinkedlist();
+   list.append(1);
+   list.append(2);
+   list.append(3);
+   console.log(list.toString())
+   list.insert(3,4);
+   list.addhead(9)
+   console.log(list.toString())
+   list.removeAt(0);
+   console.log(list.toString()) */
+
+   
+   //顺序表
+
+/*    function List(){
+       var size=0;
+       var pos=0;   //定义迭代器，不用下标访问元素
+       var datastore=[];
+       this.getsize=function(){
+           return size
+       }
+       this.getval=function(){
+           return datastore[pos]
+       }
+       this.clear=function(){
+            datastore.length=0;
+       }
+       this.find=function(val){
+            for(var i=0;i<length;i++)
+            {
+                if(datastore[i]==val)
+                    return i;
+            }
+            return -1;
+       }
+       this.insert=function(index,val){
+            if(index<0||index>size)
+                return -1;
+            else
+            {
+                datastore.splice(index,0,val);
+                size++;
+            }
+       }
+       this.append=function(val){
+           datastore[size++]=val;
+       }
+       this.remove=function(index){
+            if(index<0||index>=size)
+                return -1;
+            else
+                {
+                    datastore.splice(index,1);
+                    size--;
+                }
+       }
+       this.front=function(){
+           pos=0;
+       }
+       this.end=function(){
+           pos=size-1;
+       }
+       this.prev=function(){
+           pos=pos>0?pos-1:pos;
+       }
+       this.next=function(){
+           pos=pos<size?pos+1:pos;
+       }
+       this.curpos=function(){
+           return pos;
+       }
+   }
+
+   function display(list){
+        var res=""
+        for(list.front();list.curpos()<list.getsize();list.next())
+        {
+            res+=list.getval()+" ";
+        }
+        return res;
+   }
+
+   var list=new List();
+   list.append(1)
+   list.append(2)
+   list.insert(0,3)
+   console.log(display(list))
+   list.remove(0)
+   console.log(display(list)) */
+
+
+   //实现栈
+  /*  function Stack(){
+       var datastore=[];
+       var top=0;
+       this.push=function(val){
+            datastore[top++]=val
+       }
+       this.pop=function(){
+           return datastore[--top];
+       }
+       this.peek=function(){
+           if(top==0)
+           return -1
+           else
+           return datastore[top-1]
+       }
+       this.clear=function(){
+           top=0;
+       }
+       this.length=function(){
+           return top
+       }
+   }
+
+   var stack=new Stack();
+   stack.push(3);
+   stack.push(4);
+   stack.push(5);
+   console.log(stack.peek());
+   stack.pop();
+   console.log(stack.peek()) */
+
+
+   //队列
+
+  /*  function Queue(){
+       var datastore=[];
+       this.enqueue=function(val){
+            datastore.push(val)
+       }
+       this.dequeue=function(){
+           return datastore.shift()
+       }
+       this.front=function(){
+           return datastore[0]
+       }
+       this.back=function(){
+           return datastore[datastore.length-1]
+       }
+       this.tostring=function(){
+           var res="";
+           for(var i=0;i<datastore.length;i++)
+                res+=datastore[i]+" ";
+            return res;
+       }
+       this.empty=function(){
+           if(datastore.length==0)
+                return true;
+            else
+                return false
+       }
+   }
+
+
+   //队列实现基数排序
+   var nums=[45,72,93,51,21,16,70,41,27,31]
+   var queues=[]
+   for(let i=0;i<10;i++)
+        queues[i]=new Queue()
+   function distribute(nums,queues,n,digit){  //参数  待排序数组，使用的队列，待排序数组长度，基数
+       for(var i=0;i<n;i++)
+        {
+            if(digit==1)
+            {
+                queues[nums[i]%10].enqueue(nums[i])
+            }
+            else
+                queues[Math.floor(nums[i]/10)].enqueue(nums[i])
+        }
+   }
+   function collect(queues,nums)
+   {    var i=0
+       for(var j=0;j<queues.length;j++)
+       {
+           while(!queues[j].empty())
+           {
+               nums[i++]=queues[j].dequeue()
+           }
+       }
+   }
+   function display(nums)
+   {   var res="";
+       for(var i=0;i<nums.length;i++)
+            res+=nums[i]+" "
+        return res;
+   }    
+
+   distribute(nums,queues,10,1);
+   collect(queues,nums);
+   distribute(nums,queues,10,10);
+   collect(queues,nums);
+   console.log(display(nums)) */
+
+
+   //单链表
+   /* function Linkedlist(){
+        let Node=function(val){
+            this.val=val;
+            this.next=null;
+        }
+        let head=new Node(0);
+        let length=0;
+        let tail=head;
+        
+        this.insert=function(index,val){
+            let node=new Node(val);
+            if(index<0||index>length)
+            {
+                tail.next=node;
+                tail=tail.next;
+            }
+            else
+            {
+                let cur=head.next,index1=0,pre=head;
+                while(index1++<index)
+                {
+                    pre=cur;
+                    cur=cur.next;
+                }
+                pre.next=node;
+                node.next=cur;
+            }
+            length++
+            
+        }
+        this.remove=function(index,val){
+            if(index<0||index>length||length<0)
+                return 
+            else
+            {
+                let cur=head.next,index1=0,pre=head;
+                while(index1++<index)
+                {
+                    pre=cur;
+                    cur=cur.next;
+                }
+                pre.next=cur.next;
+            }
+            length--
+        }
+        this.tostring=function(){
+            var res=""
+            let cur=head.next;
+            while(cur!=null)
+                {
+                    res+=cur.val+" "
+                    cur=cur.next
+                }
+            return res
+        }
+   }
+
+   var list=new Linkedlist();
+   list.insert(0,1);
+   list.insert(0,2);
+   list.insert(0,3);
+   list.remove(1)
+   console.log(list.tostring()) */
+
+   //字典
+   /* function Dictinory(){
+       datastore=new Array();
+       this.add=function(key,val){
+            datastore[key]=val
+       }
+       this.find=function(key){
+            return datastore[key]
+       }
+       this.remove=function(key){
+            delete datastore[key]
+       }
+       this.showAll=function(){
+           var res={}
+           for(var key of Object.keys(datastore))
+                res[key]=datastore[key]
+            return res
+       }    
+   }
+
+    var dictinory=new Dictinory();
+    dictinory.add("math",100)
+    dictinory.add("english",98)
+    dictinory.add("politics",100)
+    console.log(dictinory.showAll()) */
+ 
+    //散列   避免碰撞：除留余数法，霍纳算法   解决碰撞：开链法  线性探测法
+   /*  function Hashtable(){
+        var table=new Array(137);
+        for(var i=0;i<table.length;i++)
+        {
+            table[i]=[];
+        }
+        this.calchash=function(data){
+            const H=37;
+            var total=0;
+            for(var i=0;i<data.length;i++)
+                {
+                    total+=H*total+data.charCodeAt(i)
+                }
+            total=total%table.length;
+            if(total<0)
+            {
+                total+=table.length-1
+            }
+            return parseInt(total)
+        }
+        this.put=function(data){
+            var index=this.calchash(data)
+            table[index].push(data)
+        }
+        this.get=function(data){
+            var index=this.calchash(data)
+            if(table[index][0]==undefined)
+                return undefined
+            else
+            {
+                for(var i=0;i<table[index].length;i++)
+                {
+                    if(table[index][i]==data)
+                        return index+"-"+data
+                }
+            }
+        }
+        this.showAll=function(){
+            var res={};
+            for(var i=0;i<table.length;i++)
+                {
+                    if(table[i][0]!=undefined)
+                        {
+                            var str="";
+                            for(var j=0;j<table[i].length;j++)
+                                str+=" "+table[i][j];
+                            res[i]=str
+                        }
+                }
+            return res;
+        }
+    }
+    var names=["David","Jennifer","Donnie","Raymond","Cynthia","Mike","Clayton","Danny","Jonathan"]
+    var table=new Hashtable();
+    for(var i=0;i<names.length;i++)
+        table.put(names[i])
+    console.log(table.get("Donnie"))
+    console.log(table.showAll()) */
+
+    //集合
+    /* function Set(){
+        var datastore=[];
+        this.add=function(val){
+            if(datastore.indexOf(val)==-1)
+                datastore.push(val)
+            else
+                return 
+        }
+        this.remove=function(val){
+            if(datastore.indexOf(val)!=-1)
+                datastore.splice(datastore.indexOf(val),1)
+            else
+                return 
+        }
+        this.show=function(){
+            return datastore
+        }
+        this.union=function(arr){     //并集，返回新集合
+            var tmpset=new Set();
+            for(var i=0;i<datastore.length;i++)
+                tmpset.add(datastore[i])
+            for(var j=0;j<arr.length;j++)
+            {
+                tmpset.add(arr[j])
+            }
+            return tmpset;
+        }
+        this.intersect=function(arr){
+            var tmpset=new Set();
+            for(var i=0;i<datastore.length;i++)
+            {
+                if(arr.indexOf(datastore[i])!=-1)
+                    tmpset.add(datastore[i])
+            }
+            return tmpset;
+        }
+    }
+
+    var set=new Set();
+    set.add(200)
+    set.add(301)
+    set.add(302)
+    console.log(set.intersect([404,200]).show()) */
+
+
+    //二叉查找树与平衡二叉树
+    /* function BST(){
+        let Node=function(val){
+            this.val=val;
+            this.left=null;
+            this.right=null;
+            }
+        this.root=null;
+        this.getmin=function(root){
+            let cur=root;
+            if(root==null) return null;
+            while(cur.left!=null)
+                cur=cur.left;
+            return cur
+        }
+        this.insert=function(val){
+            let node=new Node(val);
+            if(this.root==null)
+            {
+                this.root=node;
+            }
+            else
+            {
+                var cur=this.root;
+                var pre;
+                while(1)
+                {
+                    pre=cur;
+                    if(val<cur.val)
+                    {
+                        cur=cur.left;
+                        if(cur==null)
+                        {
+                            pre.left=node;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        cur=cur.right;
+                        if(cur==null)
+                        {
+                            pre.right=node;
+                            break;
+                        }
+                    }
+                }
+            }
+        }  
+        this.find=function(val){
+            var cur=this.root;
+            while(cur!=null)
+            {
+                if(cur.val<val)
+                    cur=cur.right;
+                else if(cur.val>val)
+                    cur=cur.left;
+                else
+                    return cur;
+            }
+            return null
+        }
+        this.remove=function(val){
+            this.root=this.removenode(this.root,val)
+        }
+        this.removenode=function(node,val)
+        {
+            if(node==null)
+                return null;
+            if(node.val==val)
+            {
+                if(node.left==null&&node.right==null)
+                    return null
+                if(node.left==null)
+                    return node.right
+                if(node.right==null)
+                    return node.left
+                var tmp=this.getmin(node.right)
+                node.val=tmp.val;
+                node.right=this.removenode(node.right,tmp.val);
+                return node;
+            }
+            else if(node.val<val)
+            {
+                node.right=this.removenode(node.right,val)
+                return node;
+            }
+            else
+            {
+                node.left=this.removenode(node.left,val);
+                return node
+            }
+                
+        }
+    }
+    var res=[]
+    function inorder(root){
+            if(root==null) return;
+            inorder(root.left);
+            res.push(root.val);
+            inorder(root.right);
+        } */
+
+    /* function inorder(root)
+    {
+        var stack=[];
+        var res=[];
+        var p=root;
+        while(stack.length!=0||p!=null)
+        {
+            if(p!=null)
+            {
+                stack.push(p);
+                p=p.left;
+            }
+            else
+            {
+                p=stack.pop();
+                res.push(p.val);
+                p=p.right
+            }
+        }
+        console.log(res.toString())
+    } */
+
+    /* function preorder(root){
+        var res=[]
+        var stack=[];
+        var p=root;
+        while(stack.length!=0||p!=null)
+        {
+            if(p!=null)
+            {
+                stack.push(p);
+                res.push(p.val);
+                p=p.left
+            }
+            else
+            {
+                p=stack.pop();
+                p=p.right;
+            }
+        }
+        console.log(res.toString())
+    } */
+
+    /* function postorder(root){
+        var res=[];
+        var stack=[];
+        stack.push(root);
+        var p=null;
+        var pre=root;
+        while(stack.length!=0)
+        {
+            p=stack[stack.length-1];
+            if(p.left&&p.left!=pre&&p.right!=pre)
+                stack.push(p.left)
+            else if(p.right&&p.right!=pre)
+                stack.push(p.right)
+            else
+            {
+                res.push(p.val);
+                pre=p;
+                stack.pop();
+            }
+        }
+
+        console.log(res.toString())
+    } */
+
+
+    /* var tree=new BST();
+    var nums=[23,46,12,16,10,10,11,6,78,45]
+    for(var i=0;i<nums.length;i++)
+    {
+        tree.insert(nums[i])
+    }
+    inorder(tree.root)
+    console.log(res)
+    tree.remove(23)
+    res.length=0
+    inorder(tree.root)
+    console.log(res)
+    console.log(tree.getmin(tree.root).val)
+    console.log(tree.find(78).val) */
+
+
+    //图
+
+    function Graph(v){
+        this.edges=0;
+        this.adj=[];
+        this.weight=[];
+        this.vertices=v;
+        for(var i=0;i<this.vertices;i++)
+            {
+                this.adj[i]=[];
+                this.weight[i]=new Array(this.vertices);
+            }
+        this.addedge=function(v,w,tag=false,val=Infinity){
+            if(tag==false)
+            {
+                this.adj[v].push(w);
+                this.adj[w].push(v);
+                this.weight[v][w]=val;
+                this.weight[w][v]=val;
+            }
+            else
+            {
+                this.adj[v].push(w);
+                this.weight[v][w]=val;
+            }
+            this.edges++;
+        }
+        this.show=function(){
+            for(var i=0;i<this.vertices;i++)
+                console.log(this.adj[i])
+        }
+    }
+    var graph=new Graph(6);           
+    graph.addedge(0,1,true)
+    graph.addedge(0,2,true)
+    graph.addedge(1,3,true)
+    graph.addedge(2,4,true)
+    graph.addedge(0,5,true)
+    graph.addedge(2,5,true)
+    graph.addedge(3,2,true)
+    var visited=new Array(graph.vertices).fill(0);    //辅助检查定点是否被访问队列
+
+
+
+    //dijkstra  算法
+
+
+
+
+
+    /* function dfs(v)    //深度优先搜索
+    {
+        visited[v]=1;
+        console.log(v)
+        for(var i=0;i<graph.adj[v].length;i++)
+        {
+            if(visited[graph.adj[v][i]]==0)
+                dfs(graph.adj[v][i])
+        }
+    }
+    for(var i=0;i<visited.length;i++)
+    {
+        if(visited[i]==0)
+            dfs(i)
+    } */
+
+    /* function bfs(v){     //广度优先搜索
+        var queue=[];
+        queue.push(v);  
+        visited[v]=1;
+        while(queue.length>0)
+        {
+            var cur=queue.shift();
+            console.log(cur);
+            for(var i=0;i<graph.adj[cur].length;i++)
+            {
+                if(visited[graph.adj[cur][i]]==0)
+                {
+                    visited[graph.adj[cur][i]]=1;
+                    queue.push(graph.adj[cur][i])
+                }
+            }
+        }
+    }
+
+    bfs(0) */
+
+
+    //拓补排序
+
+    /* var rudu=new Array(graph.vertices).fill(0);   //记录每个顶点的入度
+    for(var i=0;i<graph.vertices;i++)
+    {
+        for(var j=0;j<graph.adj[i].length;j++)
+        {
+            rudu[graph.adj[i][j]]++;
+        }
+    }
+    var res=[];
+    function topsort(g){
+        for(var i=0;i<rudu.length;i++)
+        {
+            if(rudu[i]==0&&visited[i]==0)
+            {
+                res.push(i);
+                visited[i]=1;
+            }
+        }
+        while(res.length!=0)
+        {
+            var cur=res.shift();
+            console.log(cur)
+            for(var i=0;i<g.adj[cur].length;i++)
+            {
+                rudu[g.adj[cur][i]]--;
+            }
+            for(var i=0;i<rudu.length;i++)
+            {
+                if(rudu[i]==0&&visited[i]==0)
+                   {
+                       res.push(i);
+                       visited[i]=1
+                   } 
+            }
+
+        }
+    }
+
+    topsort(graph) */
+
+    
+
+
+    
+
+
+</script>
+</body>
+</html>

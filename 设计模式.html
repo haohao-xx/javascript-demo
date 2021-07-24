@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设计模式</title>
+</head>
+<body>
+    <script>
+        //单例模式
+     /*    const singleton=function(){};
+        var getinstance=(function(){ 
+            let instance=null;
+            return function(){
+                if(!instance)
+                {
+                    instance=new singleton();
+                }
+                return instance;
+            };
+            
+            })();
+
+        let s1=getinstance();
+        let s2=getinstance();
+        console.log(s1===s2) */
+
+
+        //抽象工厂模式
+        /* class Dog{
+            run(){
+                console.log("狗")
+            }
+        }
+        class Cat{
+            run(){
+                console.log("猫")
+            }
+        }
+        class Male {
+            run() {
+                console.log("男性");
+            }
+        }
+
+        class Female {
+            run() {
+                console.log("女性");
+            }
+        }
+
+        class AbstractFactory{
+            getPerson(){
+                throw new Error("子类请实现接口");
+            }
+            getAnimal() {
+                throw new Error("子类请实现接口");
+            }
+        }
+
+        class PersonFactory extends AbstractFactory{
+            getPerson(person){
+                person=person.toLocaleLowerCase();
+                switch(person){
+                    case "male":
+                        return new Male();
+                    case "female":
+                        return new Female();
+                    default:
+                        break;
+                }
+            }
+            getAnimal(){
+                return null
+            }
+        }
+
+        class AnimalFactory extends AbstractFactory {
+            getPerson(){
+                return null
+            }
+            getAnimal(animal){
+                animal=animal.toLocaleLowerCase()
+                switch(animal)
+                {
+                    case "cat":
+                        return new Cat();
+                    case "dog":
+                        return new Dog();
+                    default:
+                        break;                
+                }
+            }
+        }
+        class Factory{
+            constructor(choice){
+                choice=choice.toLocaleLowerCase();
+                switch(choice)
+                {
+                    case "person":
+                        return new PersonFactory();
+                    case "animal":
+                        return new AnimalFactory();
+                    default:
+                        break;
+                }
+            }
+        }
+
+
+        const personFactory=new Factory("person");
+        const male=personFactory.getPerson("male"),
+              female=personFactory.getPerson("female");
+        male.run();
+        female.run();
+        const animalFactory = new Factory("animal");
+        // 从animal工厂中创建 dog 和 cat 实体
+        const dog = animalFactory.getAnimal("dog"),
+              cat = animalFactory.getAnimal("cat");
+        // 输出测试
+        dog.run();
+        cat.run(); */
+
+        //桥接模式
+
+        /* const foreach=(arr,callback)=>{
+            if(!Array.isArray(arr)) return;
+            const length=arr.length;
+            for(let i=0;i<length;i++)
+            {
+                callback(arr[i],i)
+            }
+        };
+
+        let arr=["a","b"]
+        foreach(arr,function(item,index)
+            {
+                console.log("元素是",item,"位于",index);
+            }) */
+
+
+        //观察者模式
+        
+        /* function Hunter(name,level){
+        this.name=name;
+        this.level=level;
+        this.list=[];
+    }
+    Hunter.prototype.publish=function(money){
+        console.log(this.level+'猎人'+this.name+'寻求帮助')
+        this.list.forEach(function(fn,index){
+            fn(money)
+        })
+    }
+    Hunter.prototype.subscribe=function(target,fn){
+        console.log(this.level+'猎人'+this.name+'订阅了'+target.name)
+        target.list.push(fn)
+    }
+        let hunterMing = new Hunter('小明', '黄金')
+        let hunterJin = new Hunter('小金', '白银')
+        let hunterZhang = new Hunter('小张', '黄金')
+        let hunterPeter = new Hunter('Peter', '青铜')
+
+        hunterMing.subscribe(hunterPeter, function(money){
+            console.log('小明表示：' + (money > 200 ? '' : '暂时很忙，不能') + '给予帮助')
+        })
+        hunterJin.subscribe(hunterPeter, function(){
+            console.log('小金表示：给予帮助')
+        })
+        hunterZhang.subscribe(hunterPeter, function(){
+            console.log('小张表示：给予帮助')
+        })
+        
+        //Peter遇到困难，赏金198寻求帮助
+        hunterPeter.publish(198) */
+
+        //代理模式实现图片懒加载
+
+        /* const myImg={
+            setSrc(imgnode,src){
+                imgnode.src=src;
+            }
+        }
+
+        const proxyImg={
+            setSrc(imgnode,src)
+            {
+                myImg.setSrc(imgnode,"../images/1.jpg");
+                let img=new Image();
+                img.onload=()=>{
+                    myImg.setSrc(imgnode,src);
+                    console.log(img)
+                }
+                setTimeout(() => {
+                    img.src=src
+                }, 3000);
+                
+             
+            }
+        }
+
+        let imgnode=document.createElement("img");
+        let imgsrc="../images/4.jpg";
+        document.body.appendChild(imgnode);
+        proxyImg.setSrc(imgnode,imgsrc) */
+
+
+        
+    </script>
+</body>
+</html>

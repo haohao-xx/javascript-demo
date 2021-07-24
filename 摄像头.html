@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <video id="video" width="640" height="480" autoplay ></video>
+        <div class="btns">
+            <button id="open">开启</button>
+            <button id="capture">拍照</button>
+            <button id="record">录制</button>
+            <button id="close">关闭</button>
+        </div>
+    </div>
+
+<!--描绘video截图-->
+<canvas id="canvas" width="640" height="480" style="background-color: blueviolet;"></canvas>
+<video id="videoresult" width="640" height="480" controls></video>
+<script>
+    let videoresult=document.getElementById("videoresult");
+    let video = document.getElementById("video");
+    let canvas = document.getElementById("canvas");
+    let context = canvas.getContext("2d");
+    var buffer;
+    var recorder
+    var chunks=[]
+ 
+    // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象
+    if (navigator.mediaDevices === undefined) {
+        navigator.mediaDevices = {};
+    }
+ 
+    // 一些浏览器部分支持 mediaDevices。我们不能直接给对象设置 getUserMedia
+    // 因为这样可能会覆盖已有的属性。这里我们只会在没有getUserMedia属性的时候添加它。
+    if (navigator.mediaDevices.getUserMedia === undefined) {
+        navigator.mediaDevices.getUserMedia = function (constraints) {
+ 
+            // 首先，如果有getUserMedia的话，就获得它
+            var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+ 
+            // 一些浏览器根本没实现它 - 那么就返回一个error到promise的reject来保持一个统一的接口
+            if (!getUserMedia) {
+                return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+            }
+ 
+            // 否则，为老的navigator.getUserMedia方法包裹一个Promise
+            return new Promise(function (resolve, reject) {
+                getUserMedia.call(navigator, constraints, resolve, reject);
+            });
+        }
+    }
+    
+    document.getElementsByClassName('btns')[0].addEventListener('click',function(e){
+        e=e||window.event
+        var className = e.target.id;
+            switch(className){
+                case 'open':
+                    openCamera();
+                    break;
+                case 'close':
+                    closeCamera();
+                    break;
+                case 'capture':
+                    screenShot();
+                    break;
+                case 'record':
+                    e.target.textContent=='录制'?recorder.start() : recorder.stop();
+                    e.target.textContent=e.target.textContent=='录制'?"停止" : "录制";
+                    break;
+                default:
+                    break;
+            }
+    },false)
+    
+
+    function openCamera(){
+    //默认使用前摄像头，强制使用后置摄像头如下设置
+     //let constraints = {video: { facingMode: { exact: "environment" } }};
+    let constraints = {audio:true,video: true};
+        navigator.mediaDevices.getUserMedia(constraints)
+        .then(function (stream) {
+            buffer=stream
+            recorder = new MediaRecorder(stream)
+            recorder.ondataavailable = function () {
+                //收集媒体设备 获得到的 可以使用的 媒体流数据
+                chunks.push(event.data)
+                console.log(event.data)
+            }
+            recorder.onstop = e => { 
+                var blob = new Blob(chunks, { type: "video/mp4; codecs=avc1.424028, mp4a.40.2" }); 
+                chunks = []; 
+                var audioURL = window.URL.createObjectURL(blob); 
+                "srcObject" in videoresult?videoresult.srcObject = audioURL : videoresult.src = audioURL;
+            }
+            // 旧的浏览器可能没有srcObject
+            if ("srcObject" in video) {
+                video.srcObject = stream;
+            } else {
+                // 防止在新的浏览器里使用它，应为它已经不再支持了
+                video.src = window.URL.createObjectURL(buffer);
+            }
+            video.onloadedmetadata = function (e) {
+                video.play();
+                console.log(buffer)
+            };
+        })
+        .catch(function (err) {
+            console.log(err.name + ": " + err.message);
+        });
+    }
+
+    function closeCamera(){
+        //console.log(buffer.getTracks())
+        buffer&&buffer.getTracks()[0].stop();
+    }
+
+    function screenShot(){
+        //绘制画面
+        context.drawImage(video, 0, 0, 640, 480);// 保存base64
+    }
+
+    
+    
+</script>
+</body>
+</html>

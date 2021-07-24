@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>图片懒加载</title>
+	<style>
+	    .container{
+	    	max-width: 800px;
+	    	margin:10px auto;
+	    }
+		img{
+			width:280px;
+			height:250px;  /*初始高宽占位，以免影响布局。如果是响应式页面，高宽需要动态计算。*/
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+	</div>
+	<script>
+		var contain=document.querySelector(".container")
+		createEle(13)
+		//用户一开始进来的时候就进行一次是否出现在可视窗口的判断
+		start()
+		//添加防抖
+		function debounce(fn,wait){
+			var timer=null;
+			return function(){
+				var context=this;
+				var args=this.arguments;
+				clearTimeout(timer);
+				timer=setTimeout(
+					function(){
+					fn.apply(context,args)
+				},wait)
+			}
+		}
+
+		//滚动页面再进行判断
+		window.addEventListener('scroll',debounce(start,1000))
+		function createEle(num){
+			for(var i=0;i<num;i++)
+			{
+				let img=document.createElement('img')
+				img.src="img/02.gif"
+				img.alt=''
+				img.setAttribute('data-src',"img/01.jpg")
+				contain.appendChild(img)
+			}
+		}
+		//封装
+		function start(){
+			var imgs=[].slice.call(document.querySelectorAll(".container img")); 
+			imgs.forEach(item => {
+				if(!item.classList.contains("data-isLoaded"))
+				{
+					if (isShow(item)){    //如果图片出现在可视区
+						setTimeout(function(){     //延时效果（尽量不要加，这里是为了更好的看到效果）
+							loadImg(item) //出现则加载它
+						},1000)
+					}
+				}
+				
+			});	
+		}
+		//判断一个元素是否出现在可视窗口
+		function isShow(item){
+			//console.log(window.innerHeight, window.pageYOffset,item.offsetTop)
+			return window.innerHeight + window.pageYOffset >= item.offsetTop
+		}
+
+		//加载图片
+		function loadImg(item){
+			//console.log(item.getAttribute("src"))
+			var realsrc=item.getAttribute("data-src")
+			item.setAttribute("src",realsrc)  //把data-src的值赋值给img的src (一个参数：获取该参数的值；两个参数：给该参数增加一个属性)
+			item.classList.add("data-isLoaded")  
+		}
+	</script>
+</body>
+</html>

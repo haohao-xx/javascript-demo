@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>常见题目2</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #container{
+            width: 200px;
+            height: 50px;
+            background-color: teal;
+        }
+
+        .left{
+            width: 200px;
+            height: 500px;
+            background-color: yellow;
+            float: left;
+        }
+       .right{
+            width: 200px;
+            height: 500px;
+            background-color: red;
+            float:right;
+        }
+       .mid{
+            height: 100px;
+            background-color: purple;
+        }
+        .san1{
+            overflow: hidden;
+        }
+ 
+    </style>
+</head>
+<body>
+    <div id="container">
+        <input type="text" v-model="name">
+        <p>{{name}}吃饭了吗</p>
+    </div>
+
+    <div class="san1">
+    <div class="left"></div>
+    <div class="right"></div>
+    <div class="mid"></div>
+    </div>
+
+    
+</body>
+<script>
+    //实现简单的mvvm
+    /* window.onload=function(){
+        new Vue({
+        el:"#container",
+        data:{
+            name:"郝豪",
+        }
+    })
+    }
+    
+    function defineresponse(data)
+    {
+        let collector=new Collector();
+        const proxy=new Proxy(data,{
+            get:function(target,key){
+                collector.add();
+                return target[key];
+            },
+            set:function(target,key,value){
+                //console.log(target[key])  旧值
+                collector.update(value,key,target[key]);
+                target[key]=value
+            }
+        })
+        return proxy;
+    }
+
+    class Collector{
+        static elements = null;
+        nodes=[];
+        add(){
+            if(Collector.elements)
+            {
+                this.nodes.push(Collector.elements);
+            }
+        }
+        update(value,key,oldval){
+            this.nodes.forEach(item=>{
+                if(item[key])
+                {
+                    //console.log(oldval)
+                    item[key].textContent=item[key].textContent.replace(oldval,value);
+                }
+                    
+            })
+        }
+    }
+
+    function compile(observer,el)
+    {
+        let template=document.querySelector(el);
+        let children=template.children;
+        for(let i=0;i<children.length;i++)
+        {
+            let childel=children[i];
+            console.log(childel)
+            if(childel.matches("[v-model]"))
+            {
+                let attr=childel.getAttribute("v-model")
+                childel.value=observer[attr];
+                childel.addEventListener("input",function(ev){
+                    observer[attr]=ev.target.value;
+                })
+            }
+            else
+            {
+                const content=childel.textContent;
+                //console.log(content)
+                const reg=/(?<={{).*(?=}})/;
+                const match=content.match(reg);
+                if(match)
+                {
+                    let key=match;
+                    let obj={
+                        [key]:childel
+                    }
+                    Collector.elements=obj;
+                    childel.textContent=content.replace(`{{${match}}}`,observer[key]);
+                    Collector.elements=null;
+                }
+            }
+        }
+    }
+
+    class Vue{
+        constructor({el,data})
+        {
+            const observer=defineresponse(data);
+            compile(observer,el);
+        }
+    } */
+
+    /* 犀牛书
+    你不知道的javascript */
+
+     /* function a(){            //输出3 2 1
+        setTimeout(function(){
+            console.log(1)
+        },200);
+        setTimeout(function() {
+            console.log(2)
+        }, 10);
+        console.log(3)
+    }
+    a() */
+ 
+/*     var name='jay';     //输出tom  tom undefined  michael tom
+    function Person(name){
+        this.name=name;
+        console.log(name);
+    }
+    var a=Person('tom');
+    console.log(name);
+    console.log(a);
+    var b= new Person('michael');
+    console.log(name); */
+
+
+
+
+    /* var x = 1;    //输出 2  1
+     var obj = {
+       x: 2,
+       fun: function () {
+         var x = 3;
+         return this.x;
+       }
+     };
+     var fun = obj.fun;
+     console.log( obj.fun(), fun() ); */
+
+
+   /* console.log( ['1', '2', '3'].map(parseInt)) //输出 1 nan，nan
+   console.log(parseInt('11',2))
+
+
+
+   function setname(name){
+    this.name = name
+    }
+    setname.prototype.printName = function(){ console.log(this.name) }
+    let a = new setname("cc")
+    a.name = "dd"
+    a.__proto__.name = "ee"
+
+    a.__proto__.printName()  // ee
+    a.printName() // dd
+
+    console.log("9"<"10") */ // false
+
+
+
+
+    /* let obj = {     
+     a: 1,
+     b: 2
+        };
+    Object.prototype.c = 3;
+    Object.defineProperty(obj, 'd', {
+        enumerable: false
+        });
+    for (let key in obj) {
+        console.log(key);  //a b c
+    }
+
+ */
+
+/* 
+    console.log({a:1}==={a:1}) //  false
+    console.log(Number(1)===Number(1))//  true
+    console.log(typeof null)// object      */
+
+
+    /* let a=(x)=>x   //1
+    let b=(x)=>{x;}  //undefined
+    let c=(x)=>{{x;}} //undefined
+    console.log(a(1),b(1),c(1))  */  
+
+    /* function print(){
+        for(let i=1;i<=3;i++)
+        {
+            setTimeout(function() {
+                console.log(i)
+            }, 1000);
+        }
+    }
+    print()//1,2,3 */
+
+     
+    //js回调链
+     /* function test(name){
+        this.task=[];
+        let fn=()=>{
+            console.log(name);
+            this.next();
+        }
+        this.task.push(fn);
+        setTimeout(() => {
+            this.next();
+        }, 0);
+        //return this;
+    }
+
+    test.prototype.work = function () {
+        let that = this;
+        function fn(){
+            console.log("工作")
+            that.next();
+        }
+        this.task.push(fn);
+        return this;
+    }
+
+    test.prototype.sleep=function(timer){
+        let that=this;
+        let fn=()=>{
+            setTimeout(() => {
+                console.log("睡觉"+timer+'秒');
+                that.next();
+            }, timer*1000);
+        }
+        this.task.push(fn);
+        return this;
+    }
+
+    test.prototype.eat=function(dinner){
+        let that=this;
+        let fn=()=>{
+            console.log('吃'+dinner);
+            that.next();
+        }
+        this.task.push(fn);
+        return this;
+    }
+
+    test.prototype.next=function(dinner){
+        let fn=this.task.shift();
+        if(fn)
+            fn()
+    }
+
+    new test("hao").work().sleep(4).eat("汉堡").work().work();  */
+
+
+//对象深复制
+    /* let c={a:1,b:[1,2,{name:'haohao'}],c:3}
+    var deepcopy=function (obj) {
+        if(typeof obj !=='object') return ;
+         var newobj=obj instanceof Array?[]:{};
+         for(var key in obj)
+         {
+            if(obj.hasOwnProperty(key))
+            newobj[key]=typeof obj[key]==='object'?deepcopy(obj[key]):obj[key];
+         }
+         return newobj;
+     }
+     console.log(JSON.stringify(deepcopy(c)) )
+ */
+
+//用promise实现sleep
+     /*  function sleep(ms){
+       var temple=new Promise((resolve)=>{
+           console.log(111);
+           setTimeout(resolve, ms);
+       })
+       return temple;
+     }
+     sleep(500).then(function(){
+         console.log(222)
+     })
+
+     var a=[1,2,3]
+     console.log(Object.prototype.toString.call(a)) */
+ 
+
+//闭包的使用
+     /* for(var i=0;i<5;i++)
+     {
+         (function(i){
+             setTimeout(() => {
+                 console.log(i)
+             }, 1000*i);
+         })(i)
+     }
+ */
+
+
+ //输出结果题  1 2 7 5 6 3
+     /* const first=()=>(new Promise((resolve,reject)=>{
+         console.log(1);
+         let p =new Promise((resolve,reject)=>{
+             console.log(2);
+             setTimeout(() => {
+                 console.log(3);
+                 resolve(4);
+             }, 0);
+             resolve(5);
+         })
+         resolve(6);
+
+         p.then((arg)=>{
+             console.log(arg)
+         })
+     }))
+     first().then((arg)=>{
+         console.log(arg)
+     })
+     console.log(7) */
+
+/* 判断输出   box1 true box2 true box2 false box1 false
+    const $ = document.querySelector.bind(document);
+    const box1 = $('#box1');
+    const box2 = $('#box2');
+    box1.addEventListener('click', () => {
+    console.log('box1 true');
+        }, true);
+    box1.addEventListener('click', () => {
+  console.log('box1 false');
+    }, false);
+    box2.addEventListener('click', () => {
+  console.log('box2 true');
+    }, true);
+    box2.addEventListener('click', () => {
+  console.log('box2 false');
+    }, false);
+ */
+
+
+/* var j = 0;//输出 0 2，1 2
+for (let i = 0; i < 2; i++, j++) {
+  setTimeout(function() {
+    console.log(i, j);
+  }, 1000);
+}
+console.log('5' + 3, 5 + '3')//53 53
+var person = {
+  age: 18,
+  getAge: function() {
+    return this.age;
+  }
+};
+var getAge = person.getAge;
+console.log(person.getAge(), getAge());//18 undefined
+ */
+
+// 3,3
+/*   var a=function(){
+      this.b=3;
+  }
+  var c=new a();
+  a.prototype.b=9;
+  var b=7;
+  a();
+  console.log(b)
+  console.log(c.b) */
+
+
+ /*  function a() {
+  if(true) {
+    let b = 1;
+  }
+    console.log(b)
+}
+a() *///undefined
+
+
+
+//判断两个对象是否相等
+/* var obj1={a:"zxj",b:{c:"zxl",d:[1,2,3]}};
+var obj2={a:"zxj",b:{c:"zxl",d:[1,2,3]}};
+
+function compare(obj1,obj2)
+{
+   if(Object.keys(obj1).length!=Object.keys(obj2).length)
+   {
+       return false;
+   }
+   else
+   {
+       for(var key in obj1)
+       {
+           if(obj2.hasOwnProperty(key))
+           {
+                var item1=obj1[key];
+                var item2=obj2[key];
+                if(item1 instanceof Object &&item2 instanceof Object)
+                    return compare(item1,item2)
+                else if(obj1[key]!==obj2[key])
+                    return false;
+           }
+           else
+              return false
+        }
+    }
+    return true;
+}
+
+console.log(compare(obj1,obj2))
+console.log(JSON.stringify(obj1)==JSON.stringify(obj2))
+console.log(JSON.stringify(obj1),JSON.stringify(obj2))
+console.log(JSON.stringify([1,2,"3"])) */
+
+//  5 5
+ /* window.data=5;
+ var foo={
+     data:6,
+     click:()=>{
+         console.log(this.data)
+     }
+ }
+ var bar =foo.click;
+ foo.click()
+ bar(); */
+
+//数组去重 indexof
+ /* function unique(arr){
+     var newarr=[];
+     for(var i=0;i<arr.length;i++)
+    {
+         if(newarr.indexOf(arr[i])===-1)
+         newarr.push(arr[i])
+    }
+    return newarr
+ }
+ console.log(unique([1,1,1,1,1,1,2])) */
+ 
+
+//实现bind函数
+/* Function.prototype.bind=function(oThis){
+    var self=this;      //self  指向调用bind的函数
+    var args=[].slice.call(arguments,1);
+    var result=function(){
+        return self.apply(oThis,args.concat([].slice.call(arguments)))   //修改这个函数的this指向，返回这个函数  concat可省略
+    };
+    var temp=function(){};
+    temp.prototype=this.prototype;
+    result.prototype=new temp();
+    return result;
+}
+
+function sayname(age){
+    console.log(this.name)
+    console.log(age)
+}
+
+var a={
+    name:"haohao"
+}
+var b={
+    name:"nihao"
+};
+sayname.bind(a,"123")() */
+/* 1.首先通过数组的原型方法把bind函数参数中除了oThis对象以外的参数保存到args中，
+然后再讲args和调用函数传入参数列表合并，并通过调用Function.prototype.apply方法将oThis绑定到调用函数的this上，
+并传入合并后的参数列表。
+2.因为调用apply方法返回了一个新的函数对象，丢失了原函数对象的原型属性，所以还要将新的函数对象的prototype属性引用原函数对象的原型对象。
+3.之所以不采用result.prototype=this.prototype这种写法，而是使用了一个中间层对象temp，
+是因为不想通过修改result.prototype就修改了原函数对象的原型对象。 */
+
+
+//手写new函数
+/*  function dog(name,age){
+    this.name=name;
+    this.age=age
+}
+dog.prototype.sayname=function(){
+    console.log(this.name)
+}
+function _new(fn,...arg){
+    var obj=Object.create(fn.prototype)
+    //console.log(arg)
+    var rel=fn.apply(obj,arg)
+    return rel instanceof Object?rel:obj
+}
+
+var _newdog=_new(dog,'hahaha',12)
+_newdog.sayname()
+console.log(_newdog.age) */
+ 
+
+
+//输出  function a() {}, 100
+/*  function c () {
+    console.log(a);
+    var a = 10;
+    function a() {};
+    a = 100;
+    console.log(a);
+}
+c(); */
+
+//settimeout 实现 setinterval
+/* function myinterval(fn,time){
+    function interval(){
+        setTimeout(interval, time);
+        fn()
+    }
+    setTimeout(interval, time);
+}
+myinterval(()=>{console.log(1)},2000) */
+
+//实现call   
+/* Function.prototype.mycall=function(obj){
+    var args=[].slice.call(arguments,1);   //传入的参数是字符串需要一个一个遍历，转换为字符串形式
+    obj.fn=this;
+    eval("obj.fn("+args+")");
+    delete obj.fn
+}
+function fn(a,b,c)
+{
+    console.log(a+b+c+this.name)
+}
+var a={
+    name:"haohao"
+}
+fn.mycall(a,"12","34","56") */
+
+
+    //实现promise
+   /*  class mypromise{
+        constructor(process){
+            this.status='pending';
+            this.msg="";
+            //console.log(this.resolve)
+            process(this.resolve.bind(this),this.reject.bind(this));
+            return this;
+        }
+        resolve(val){
+            this.status='fullfilled';
+            this.msg=val;
+        }
+        reject(err){
+            this.status='rejected';
+            this.msg=err;
+        }
+        then(resolve,reject){
+            if(this.status=='fullfilled')
+                resolve(this.msg)
+            if(this.status=='rejected')
+                reject(this.msg)
+        }
+    }
+
+
+    var mm=new mypromise(function(resolve,reject){
+        reject('123');
+    })
+    mm.then(function(success){
+        console.log(success)
+    },function(fail){
+        console.log(fail)
+    }) */
+
+    //千分位标注
+    /* function addseperator(str="",sep=","){
+        str+="";
+        const arr=str.split("."),re=/(\d+)(\d{3})/;
+        let integer=arr[0],decimal=arr.length<=1?"":`.${arr[1]}`;
+        while(re.test(integer))
+        {
+            integer=integer.replace(re,"$1"+sep+"$2")
+        }
+        return integer+decimal
+    }
+    console.log(addseperator(-10000.23456));
+    console.log(addseperator(100))
+    console.log(addseperator(1234,";")) */
+
+    //reduce实现组合函数
+   /*  function add5(x)
+    {
+        return x+5;
+    }
+    function div2(x)
+    {
+        return x/2
+    }
+    function sub3(x)
+    {
+        return x-3
+    }
+    //const chain=[add5,div2,sub3].reduce((a,b)=>(...args)=>a(b(...args)));
+    function chain(...fns)
+    {
+        return fns.reduce((a,b)=>{
+            return (...args)=>{
+                //console.log(args)
+                return a(b(...args))}
+        })
+    }
+    console.log(chain(add5,div2,sub3)(1)) */
+</script>
+</html>
