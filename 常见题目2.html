@@ -643,5 +643,129 @@ fn.mycall(a,"12","34","56") */
         })
     }
     console.log(chain(add5,div2,sub3)(1)) */
+
+    /*     var LRUCache = function(capacity) {
+        this.Node=function(key,value)
+        {
+            this.key=key;
+            this.val=value;
+            this.next=null;
+            this.prev=null;
+        }
+        this.length=0;
+        this.capacity=capacity;
+        this.fhead=new this.Node(0,0);
+        this.ftail=new this.Node(0,0);
+        this.fhead.next=this.ftail;
+        this.ftail.prev=this.fhead;
+        this.map={};
+        
+    };
+    LRUCache.prototype.get = function(key) {
+        if(this.map[key]==undefined) console.log(-1);
+        else
+        {
+            let node=this.map[key];
+            this.remove(node)
+            this.move(node)
+
+            //console.log(this.fhead.next.val)
+            console.log(this.map[key].val,this.tostring())
+            
+        }
+            
+    };
+    LRUCache.prototype.remove=function(node){
+            node.prev.next=node.next;
+            node.next.prev=node.prev;
+    }
+    LRUCache.prototype.move=function(node){
+            node.next=this.fhead.next;
+            node.next.prev=node;
+            this.fhead.next=node;
+            node.prev=this.fhead;
+    }
+    LRUCache.prototype.tostring = function(){
+        var res="";
+        var cur=this.fhead.next;
+        while(cur!=this.ftail)
+            {   
+                res+=cur.val;
+                cur=cur.next;
+            }
+        return res
+    }
+
+    LRUCache.prototype.put = function(key, value) {
+        var node=new this.Node(key,value);
+        if(this.map[key]!=undefined)
+            {
+                this.map[key].val=node.val;
+                return;
+            }
+        if(this.length>=this.capacity)
+        {
+            this.map[this.ftail.prev.key]=undefined;
+            this.remove(this.ftail.prev);
+            this.move(node)
+
+            this.map[key]=node;
+        }
+        else
+        {
+            this.move(node)
+            this.map[key]=node;
+            this.length++;
+        }
+    };
+
+    var cache = new LRUCache( 2 );
+
+    cache.get(2);       // 返回  1
+    cache.put(2, 6);    // 该操作会使得关键字 2 作废
+    cache.get(1);       // 返回 -1 (未找到)
+    cache.put(1, 5);    // 该操作会使得关键字 1 作废
+    cache.put(1,2);       // 返回 -1 (未找到)
+    cache.get(1);       // 返回  3
+    cache.get(2);       // 返回  4 */
+
+//完整堆排序
+/* function heapfy(arr,start,end)
+{
+    var tmp=arr[start];
+    for(var j=start*2+1;j<=end;j=j*2+1)
+    {
+        if(j+1<=end&&arr[j]<arr[j+1])
+            j++;
+        if(tmp>=arr[j])
+            break;
+        arr[start]=arr[j];
+        start=j;
+    }
+    arr[start]=tmp;
+}
+function heapsort(arr)
+{
+    var len=arr.length;
+    for(var i=Math.floor(len/2)-1;i>=0;i--)
+    {
+        heapfy(arr,i,len-1);
+    }
+    for(var i=len-1;i>=0;i--)
+    {
+        swap(arr,0,i);
+        heapfy(arr,0,i-1);
+    }
+    console.log(arr)
+}
+
+function swap(arr,i,j)
+{
+    var tmp=arr[i];
+    arr[i]=arr[j];
+    arr[j]=tmp;
+}
+
+heapsort([1,9,0,16]) */
 </script>
 </html>
